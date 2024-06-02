@@ -7,12 +7,11 @@ public class Project{
   public static void main(String[] args){
     
    
-    int dollars; // сумма денег в американских долларах
-    double roubles; // сумма денег в российских рублях
-    int digit; // последняя цифра dollars
+    int[] dollarsArray; // массив сумм денег в американских долларах
+    double[] roublesArray; // массив сумм денег в российских рублях
     String end; // окончание 
     int n; // количество конвертаций
-    int i; // счетчик
+   
 
     instract();
     Scanner scan = new Scanner(System.in);
@@ -24,25 +23,21 @@ public class Project{
       n = scan.nextInt();
     }while(n <= 0);
     
-    for(i = 0; i < n; ++i){
-      System.out.println("Введите сумму в американских долларах");
-      dollars = scan.nextInt();
-      
-      digit = dollars % 10;
-      if(dollars >= 5 && digit <= 20){
-        end = "американских долларов равны";
-      }else if(digit == 1){
-        end = "американский доллар равен";  
-      }else if(digit >= 2 && digit <= 4){
-        end = "американских доллара равны";
-      }else if(digit >= 11 && digit <= 14){//to do 
-        end = "американских доллара равны";
-      }else{
-        end = "американских долларов равны";
-      }
-      roubles = find_roubles(dollars);
-      System.out.println(dollars + " " + end + " " + roubles + " рублей" );
-    }  
+    
+    System.out.println("Введите " + n +  " сумм в американских долларах через пробел ");
+    dollarsArray = new int[n];
+    
+    for(int i = 0; i < n; i++){
+      dollarsArray[i] = scan.nextInt();
+    }
+    
+    roublesArray = find_roubles(dollarsArray, n);
+    
+    //отоброазить сумму денег в российских рублях
+    System.out.println("\n   Сумма, $   Сумма, P");
+    for(int i = 0; i<n; ++i){
+       System.out.println("\t" + dollarsArray[i] + "\t" + (int)(roublesArray[i] * 100) / 100.0);
+    }
     
   } 
   
@@ -50,7 +45,12 @@ public class Project{
     System.out.println(" Укажите желаемое колличество конвертаций, а затем введите сумму в американских долларах");
   }
   
-  public static double find_roubles(int dollars){
-  return ROUBLES_PER_DOLLAR * dollars; 
+  public static double[] find_roubles(int[] dollarsArray, int n){
+    double[] roublesArray = new double[n];
+    int i;
+    for(i=0; i<n; i++){
+      roublesArray[i] = ROUBLES_PER_DOLLAR * dollarsArray[i];
+    }
+    return roublesArray;
   }
 }
